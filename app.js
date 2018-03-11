@@ -10,6 +10,8 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const task  = require('./routes/task' );
 const fb_api= require('./routes/fb-api');
+const steam_api = require('./routes/steam-api');
+
 require('dotenv').config()
 const mongoose = require('mongoose');
 
@@ -34,6 +36,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/tasks', task);
 app.use('/fb-api', fb_api);
+app.use('/steam', steam_api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

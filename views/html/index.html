@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>login</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js">
+    </script>
+  </head>
+  <body>
+    <fb:login-button class="fb-login-button" scope="public_profile,email,id" onlogin="checkLoginState();" style="display:none">
+      Login
+    </fb:login-button>
+    <button type="button" name="button" class="fb-logout-button" onclick="logout()" style="display:none">
+      logout
+    </button>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+    <script src="../../public/javascripts/fb.js" charset="utf-8"></script>
+
+  </body>
+</html>

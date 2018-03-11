@@ -44,6 +44,7 @@ module.exports = {
     if (req.body.userName) {updateData.userName = req.body.userName}
     if (req.body.email) {updateData.email = req.body.email}
     if (req.body.profile_pic_url) {updateData.profile_pic_url = req.body.profile_pic_url}
+    if (req.body.steamid) {updateData.steamid = req.body.steamid}
 
     User.findByIdAndUpdate({ _id : id }, updateData, {new: true})
       .exec()

@@ -7,18 +7,19 @@ function getJWT (req, res, next) {
   const token = jwt.sign(data, process.env.SECRETKEY)
   // console.log(token);
   req.token = token;
-  next()
+  return next()
 }
 
 function authJWT (req, res, next) {
   try {
+    console.log('=======JWT SIGN========');
     const decoded = jwt.verify(req.body.token, process.env.SECRETKEY)
-    console.log('=======>>>>>>>>>>>>');
-    console.log(decoded);
+    // console.log('=======>>>>>>>>>>>>');
+    // console.log(decoded);
     req.decoded = decoded;
 
     // need to cross check with userID from db
-    next()
+    return next()
   } catch (err) {
     res.status(401).send(err)
   }
@@ -29,7 +30,7 @@ function authAdminJWT (req, res, next) {
     const decoded = jwt.verify(req.body.token, process.env.SECRETKEY)
     // console.log(decoded.email);
     if (decoded.email == process.env.ADMINEMAIL) {
-      next()
+      return next()
     } else {
       res.status(401).json({
         message: 'You are not admin'

@@ -1,5 +1,5 @@
 const Task = require('../models/Task');
-const User = require('../models/User')
+const User = require('../models/User');
 module.exports = {
 
   index : (req, res) => {
@@ -143,8 +143,8 @@ module.exports = {
           if (String(foundTask.userId) !== String(foundUser._id)) {
             return res.status(404).json({
               message: "No matching task for this user was found."
-            })
-          }
+              })
+            }
           foundTask.remove().then(deletedTask => {
               res.status(200).json({
                 message: 'Task Successfully removed',
@@ -157,19 +157,6 @@ module.exports = {
             })
           })
         })
-
-        // Task.findOneAndRemove({ _id: taskID})
-        //   .exec()
-        //   .then(Task => {
-        //     res.status(200).json({
-        //       message: 'Task Successfully removed'
-        //     })
-        //   })
-        //   .catch(err => {
-        //     res.status(500).json({
-        //       message: err.message
-        //     })
-        //   })
       })
       .catch(err => {
         res.status(500).json({
@@ -178,5 +165,8 @@ module.exports = {
       })
 
   }
+
+
+
 
 };

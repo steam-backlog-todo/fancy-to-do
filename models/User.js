@@ -5,6 +5,7 @@ var UserShema = new Schema({
     userName : String,
     email: String,
     profile_pic_url: String,
+    steamid: String,
     taskID :[{
         type : Schema.Types.ObjectId,
         ref : 'Task'

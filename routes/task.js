@@ -5,9 +5,9 @@ const JWT = require('../middleware/jwt.js');
 
 
 /* GET tasks listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 router.get('/search', JWT.authJWT, TaskController.index) // search for task for user
 router.post('/add/:userID', JWT.authJWT, TaskController.create) // add task to user, auth user

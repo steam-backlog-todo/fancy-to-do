@@ -5,9 +5,9 @@ const JWT = require('../middleware/jwt.js');
 const memUpload = require('../middleware/multer.js');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 // router.get('/task/:id', JWT.authJWT, UserController.index) // get data of user and todo task
 // router.post('/add', JWT.authAdminJWT , UserController.create) // add user, admin only, me!

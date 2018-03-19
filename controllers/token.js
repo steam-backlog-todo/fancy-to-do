@@ -5,7 +5,7 @@ class TokenController {
 
   static tokenToClient(req, res){
 
-    User.findOne({email: req.response.email})
+    User.findOne({email: req.body.response.email})
       .exec()
       .then(foundUser => {
         // console.log(foundUser);
@@ -13,16 +13,16 @@ class TokenController {
         if (foundUser) {
           let data = {
             token:req.token,
-            fbData: req.response,
+            fbData: req.body.response,
             userData: foundUser,
             message:'jwt login succesful'
           }
           return res.status(200).send(data)
         } else {
           let newUser = new User({
-            userName: req.response.name,
-            email: req.response.email,
-            profile_pic_url: req.response.picture.data.url
+            userName: req.body.response.name,
+            email: req.body.response.email,
+            profile_pic_url: req.body.response.picture.data.url
           })
 
           newUser.save((err,createdUser)=>{
@@ -33,7 +33,7 @@ class TokenController {
             }
             let data = {
               token:req.token,
-              fbData: req.response,
+              fbData: req.body.response,
               userData: createdUser,
               message:'jwt login succesful'
             }

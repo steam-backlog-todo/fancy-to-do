@@ -75,6 +75,26 @@ module.exports = {
           message: err.message
         })
       })
+  },
+
+  steamid: (req, res) => {
+    let id = req.body.userID;
+    let update = {
+      steamid: req.body.steamid
+    };
+    User.findByIdAndUpdate({_id: id}, update, {new: true})
+      .exec().then(updated => {
+        res.status(200).json({
+          message: 'Successfully added steamid',
+          steamid: updated.steamid
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          message: 'Server error',
+          err: err
+        })
+      })
   }
 
 };

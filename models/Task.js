@@ -5,6 +5,10 @@ var TaskSchema = new Schema({
     name : String,
     category : String,
     desc : String,
+    iconUrl: {
+      type: String,
+      default: 'undefined'
+    },
     progress : {
       type : String,
       default : 'not done'

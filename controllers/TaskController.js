@@ -1,7 +1,16 @@
 const Task = require('../models/Task');
 const User = require('../models/User');
 module.exports = {
-
+  all: (req,res) => {
+    Task.find({})
+      .limit(30)
+      .exec()
+      .then(all => {
+        res.status(200).json({
+          data: all
+        })
+      })
+  },
   index : (req, res) => {
     let userName = req.decoded.name;
     let email = req.decoded.email;
@@ -15,8 +24,9 @@ module.exports = {
           })
         }
         let userId = foundUser._id
-        Task.find({userId : userId})
-          .limit(30).exec().then(foundTasks => {
+        Task.find({userId : userId, progress:'not done'})
+          .sort({createdAt: -1})
+          .limit(10).exec().then(foundTasks => {
             res.status(200).json({
               message: 'found tasks',
               data: foundTasks
@@ -36,7 +46,41 @@ module.exports = {
       })
 
   },
+  indexDone : (req, res) => {
+    let userName = req.decoded.name;
+    let email = req.decoded.email;
+    User.findOne({
+        userName: userName,
+        email: email
+      }).exec().then(foundUser => {
+        if (foundUser == null) {
+          return res.status(404).json({
+            message: "No matching user was found."
+          })
+        }
+        let userId = foundUser._id
+        Task.find({userId : userId, progress:'done'})
+          .sort({finishedAt: -1})
+          .limit(10).exec().then(foundTasks => {
+            res.status(200).json({
+              message: 'found tasks',
+              data: foundTasks
+            })
+          })
+          .catch(err => {
+            res.status(500).json({
+              message: err.message
+            })
+          })
+      })
+      .catch(err => {
+        return res.status(500).json({
+          message: "Something went wrong",
+          err : err
+        })
+      })
 
+  },
   create : (req, res) => {
     const userId = req.params.userID;
     let userName = req.decoded.name;
@@ -164,6 +208,39 @@ module.exports = {
         })
       })
 
+  },
+
+  finish: (req, res) => {
+    console.log(req.body);
+    let taskID = req.body.taskID;
+    Task.findById(taskID)
+      .exec().then(data => {
+        if (!data) {
+          return res.status(404).json({
+            message: 'task not found on db'
+          })
+        }
+        console.log(data);
+        console.log('=======');
+        console.log(data.progress);
+        let updateData = {
+          progress: 'done',
+          finishedAt: new Date()
+        }
+        data.update(updateData, {new:true})
+          .exec().then(updated => {
+            res.status(200).json({
+              message: 'task finished!',
+              data: updated
+            })
+          })
+      })
+      .catch(err => {
+        res.status(500).json({
+          message: 'server error',
+          err:err
+        })
+      })
   }
 
 

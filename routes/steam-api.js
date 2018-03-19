@@ -4,6 +4,7 @@ const TaskController = require('../controllers/TaskController');
 const UserController = require('../controllers/UserController.js');
 const JWT = require('../middleware/jwt.js');
 const SteamController = require('../controllers/SteamController.js');
+const memUpload = require('../middleware/multer.js');
 
 
 /* GET home page. */
@@ -11,7 +12,8 @@ const SteamController = require('../controllers/SteamController.js');
 
 // request => authJWT => get steamid, create new tasks, add tasks to dbs
 
-
-router.post('/add-all', JWT.authJWT, SteamController.getOwnedGames)
+router.post('/', memUpload.single(''), JWT.authJWT, SteamController.getGames)
+// router.post('/add', memUpload.single(''), JWT.authJWT, SteamController.addOne)
+// router.post('/add-all', JWT.authJWT, SteamController.getOwnedGames)
 
 module.exports = router;

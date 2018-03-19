@@ -7,6 +7,6 @@ const TokenController = require('../controllers/token.js')
 
 /* GET home page. */
 
-router.post('/facebook', getFbData, JWT.getJWT, TokenController.tokenToClient)
+router.post('/facebook', JWT.getJWT, TokenController.tokenToClient)
 
 module.exports = router;

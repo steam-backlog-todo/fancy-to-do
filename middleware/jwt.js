@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken')
 
 function getJWT (req, res, next) {
-  const data = req.response;
+  const data = req.body.response;
   console.log('response');
-  console.log(req.response);
+  console.log(req.body.response);
   const token = jwt.sign(data, process.env.SECRETKEY)
   // console.log(token);
   req.token = token;
@@ -11,11 +11,12 @@ function getJWT (req, res, next) {
 }
 
 function authJWT (req, res, next) {
+  console.log(req.body);
   try {
     console.log('=======JWT SIGN========');
     const decoded = jwt.verify(req.body.token, process.env.SECRETKEY)
-    // console.log('=======>>>>>>>>>>>>');
-    // console.log(decoded);
+    console.log('=======>>>>>>>>>>>>');
+    console.log(decoded);
     req.decoded = decoded;
 
     // need to cross check with userID from db

@@ -5,7 +5,29 @@ const User = require('../models/User');
 const axios = require('axios');
 
 module.exports = {
+  getGames: (req, res) => {
+    let steamid = req.body.steamid;
 
+    const baseURL = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAMAPIKEY}&steamid=${steamid}&format=json`
+    axios.get(baseURL,{
+      params: {
+        include_appinfo: 1,
+        include_played_free_games: 1
+      }
+    }).then(response => {
+      let games = response.data.response.games
+      let underPlayed = games.filter(game => game.playtime_forever < 600)
+      res.status(200).json({
+        message: 'Successfully found steam games',
+        games : underPlayed
+      })
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: 'Server error'
+      });
+    })
+  },
   getOwnedGames: (req, res) => {
     console.log('=======steam controller========');
     User.findOne({

@@ -15,7 +15,9 @@ const steam_api = require('./routes/steam-api');
 require('dotenv').config()
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/fancy_to_do');
+let uri = 'mongodb://werkbau:YratyortSevaC5691@devstack-0-shard-00-00-hjaoe.mongodb.net:27017,devstack-0-shard-00-01-hjaoe.mongodb.net:27017,devstack-0-shard-00-02-hjaoe.mongodb.net:27017/backlog?ssl=true&replicaSet=devstack-0-shard-0&authSource=admin';
+let localhost = 'mongodb://localhost/fancy_to_do';
+mongoose.connect(uri);
 
 const app = express();
 
